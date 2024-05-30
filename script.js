@@ -25,6 +25,11 @@ document.addEventListener("DOMContentLoaded", function() {
             productTitle.innerText = product.title;
             productItem.appendChild(productTitle);
 
+            const productPrice = document.createElement('div');
+            productPrice.className = 'product-price';
+            productPrice.innerText = `Price: ${product.price}`;
+            productItem.appendChild(productPrice);
+          
             const productQuantity = document.createElement('div');
             productQuantity.className = 'product-quantity';
             productQuantity.innerText = `Quantity: ${product.quantity}`;
@@ -90,6 +95,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('product-id').value = index;
         document.getElementById('product-title').value = product.title;
         document.getElementById('product-image').value = '';
+              document.getElementById('product-price').value = product.price;
         document.getElementById('product-quantity').value = product.quantity;
         adminPanel.style.display = 'block';
     }
@@ -99,11 +105,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const id = document.getElementById('product-id').value;
         const title = document.getElementById('product-title').value;
         const imageInput = document.getElementById('product-image');
+        const price = parseInt(document.getElementById('product-price').value);
         const quantity = parseInt(document.getElementById('product-quantity').value);
 
         if (id !== '') {
             // Update existing product
             products[id].title = title;
+            products[id].price = price;
             products[id].quantity = quantity;
             
             if (imageInput.files && imageInput.files[0]) {
@@ -127,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const image = e.target.result;
-                products.push({ title, image, quantity });
+                products.push({ title, image, price, quantity });
                 saveProducts();
                 renderProducts();
                 productForm.reset();
